@@ -28,28 +28,30 @@
                             <a class="nav-link text-white fs-5" href="/">Flask App</a>
                         </li>
                     </ul>
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        {% if 'user_id' in session %}
+                        <li class="nav-item">
+                            <span class="nav-link">Welcome, {{ session['username'] }}!</span>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-outline-danger" href="{{ url_for('logout') }}">Logout</a>
+                        </li>
+                        {% endif %}
+                    </ul>
                 </div>
+
             </div>
         </nav>
     </header>
 
     <main class="content">
-        <section class="py-5 text-center container bg-body-tertiary mt-4">
-            <div class="row py-lg-5 justify-content-center"> <!-- Add justify-content-center here -->
-                <div class="col-lg-6 col-md-8 mx-auto">
-                    <h1 class="fw-light">Hi! Welcome to my Flask Basic App!</h1>
-                    <p class="lead text-body-secondary">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur amet dolorum nihil alias
-                        laborum aperiam adipisci ducimus id qui nisi, ex voluptatibus magni optio sunt recusandae,
-                        harum repellendus officia! Voluptate.
-                    </p>
-                    <p>
-                        <a href="#" class="btn btn-primary my-2">Login here</a>
-                        <a href="#" class="btn btn-secondary my-2">Signup now</a>
-                    </p>
-                </div>
-            </div>
-        </section>
+        {% if session.get('success_message') %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session.pop('success_message') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endif %}
+
         {% block content %}
         <!-- Default content go here -->
         {% endblock %}
